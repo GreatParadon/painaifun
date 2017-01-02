@@ -17,6 +17,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('room', 'RoomController');
 
     Route::resource('rate', 'RateController');
+    Route::resource('subroom', 'SubRoomController');
 
 //    Route::delete('gallery/{id}', 'SubCategoryController@galleryDestroy');
 //    Route::post('gallery', 'SubCategoryController@galleryUpload');

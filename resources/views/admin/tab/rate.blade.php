@@ -2,7 +2,10 @@
     <table class="table">
         <thead>
         <tr>
-            <th colspan="8">
+            <th colspan="4">
+                <h3>{{ $select->title }}</h3>
+            </th>
+            <th colspan="4">
                 <button id="add_new_rate" onclick="onAddRate()" class="btn btn-success pull-right"><span
                             class="glyphicon glyphicon-plus"></span></button>
             </th>
@@ -30,7 +33,7 @@
         rate(id);
     });
 
-    function queryData(result) {
+    function queryRateData(result) {
         $("#rate_list").empty();
         if (result.success == true) {
             $.each(result.rates, function (key, value) {
@@ -66,7 +69,7 @@
             url: '{{ url('admin/rate') }}/' + id,
             type: 'GET',
             success: function (result) {
-                queryData(result);
+                queryRateData(result);
             }
         });
 
@@ -84,7 +87,7 @@
                 _token: token
             },
             success: function (result) {
-                queryData(result);
+                queryRateData(result);
             },
             error: function () {
                 $("#rate_list").append('<tr>'

@@ -2,8 +2,11 @@
     <table class="table">
         <thead>
         <tr>
-            <th colspan="8">
-                <button id="add_new_rate" onclick="onAddRate()" class="btn btn-success pull-right"><span
+            <th colspan="2">
+                <h3>{{ $select->title }}</h3>
+            </th>
+            <th colspan="1">
+                <button id="add_new_room" onclick="onAddroom()" class="btn btn-success pull-right"><span
                             class="glyphicon glyphicon-plus"></span></button>
             </th>
         </tr>
@@ -13,7 +16,7 @@
             <th>Option</th>
         </tr>
         </thead>
-        <tbody id="room_list">
+        <tbody id="subroom_list">
         </tbody>
     </table>
 </div><!-- /.box-body -->
@@ -22,49 +25,46 @@
 
     $(document).ready(function () {
         var id = '{{ $select->id }}';
-        rate(id);
+        room(id);
     });
 
-    function queryData(result) {
-        $("#room_list").empty();
+    function queryRoomData(result) {
+        $("#subroom_list").empty();
         if (result.success == true) {
-            $.each(result.rates, function (key, value) {
+            $.each(result.sub_rooms, function (key, value) {
                 var id = (value['id']) ? value['id'] : '';
-                var agency = (value['from_date']) ? value['from_date'] : '';
+                var name = (value['name']) ? value['name'] : '';
+                var agency = (value['agency']) ? value['agency'] : '';
 
-                $("#room_list").append('<tr id="rate_' + id + '">'
-                    + '<td><input type="date" id="from_date' + id + '" class="form-control input-sm" value="' + from_date + '"></td>'
-                    + '<td><input type="date" id="to_date' + id + '" class="form-control input-sm" value="' + to_date + '"></td>'
-                    + '<td><input type="number" id="first' + id + '" class="form-control input-sm" value="' + first + '"></td>'
-                    + '<td><input type="number" id="second' + id + '" class="form-control input-sm" value="' + second + '"></td>'
-                    + '<td><input type="number" id="holiday' + id + '" class="form-control input-sm" value="' + holiday + '"></td>'
-                    + '<td><select id="breakfast' + id + '" class="form-control input-sm" value="' + breakfast + '">'
-                    + '<option value="1">Yes</option>'
-                    + '<option value="0">No</option>'
-                    + '</select></td>'
-                    + '<td><input type="number" id="extrabed' + id + '" class="form-control input-sm" value="' + extrabed + '"></td>'
-                    + '<td><a onclick="saveRate(' + id + ')" style="cursor: pointer"><span class="glyphicon glyphicon-floppy-disk"></span></a> | '
-                    + '<a onclick="deleteRate(' + id + ')" style="cursor: pointer"><span class="glyphicon glyphicon-trash"></span></a></td>'
+                $("#subroom_list").append('<tr id="subroom_' + id + '">'
+                    + '<td><input type="text" id="name' + id + '" class="form-control input-sm" value="' + name + '"></td>'
+                    + '<td><input type="text" id="agency' + id + '" class="form-control input-sm" value="' + agency + '"></td>'
+//                    + '<td><select id="breakfast' + id + '" class="form-control input-sm" value="' + breakfast + '">'
+//                    + '<option value="1">Yes</option>'
+//                    + '<option value="0">No</option>'
+//                    + '</select></td>'
+                    + '<td><a onclick="saveRoom(' + id + ')" style="cursor: pointer"><span class="glyphicon glyphicon-floppy-disk"></span></a> | '
+                    + '<a onclick="deleteRoom(' + id + ')" style="cursor: pointer"><span class="glyphicon glyphicon-trash"></span></a></td>'
                     + '</tr>');
             });
         }
     }
 
-    function rate(id) {
+    function room(id) {
         $.ajax({
-            url: '{{ url('admin/rate') }}/' + id,
+            url: '{{ url('admin/subroom') }}/' + id,
             type: 'GET',
             success: function (result) {
-                queryData(result);
+                queryRoomData(result);
             }
         });
 
     }
 
-    function onAddRate() {
+    function onAddroom() {
         var token = '{{ csrf_token() }}';
         var room_id = '{{ $select->id }}';
-        var url = "{{ url('admin/rate') }}";
+        var url = "{{ url('admin/subroom') }}";
         $.ajax({
             url: url,
             type: 'POST',
@@ -73,39 +73,29 @@
                 _token: token
             },
             success: function (result) {
-                queryData(result);
+                queryRoomData(result);
             },
             error: function () {
                 $("#room_list").append('<tr>'
-                    + '<td colspan="8" align="center">No data</td>'
+                    + '<td colspan="4" align="center">No data</td>'
                     + '</tr>');
             }
         });
     }
 
-    function saveRate(id) {
+    function saveRoom(id) {
         var token = '{{ csrf_token() }}';
-        var from_date = $("#from_date" + id).val();
-        var to_date = $("#to_date" + id).val();
-        var first = $("#first" + id).val();
-        var second = $("#second" + id).val();
-        var holiday = $("#holiday" + id).val();
-        var breakfast = $("#breakfast" + id).val();
-        var extrabed = $("#extrabed" + id).val();
-        var url = "{{ url('admin/rate') }}/" + id;
+        var name = $("#name" + id).val();
+        var agency = $("#agency" + id).val();
+        var url = "{{ url('admin/subroom') }}/" + id;
         var confirm = window.confirm('Are you sure to save?');
         if (confirm == true) {
             $.ajax({
                 url: url,
                 type: 'PUT',
                 data: {
-                    from_date: from_date,
-                    to_date: to_date,
-                    first: first,
-                    second: second,
-                    holiday: holiday,
-                    breakfast: breakfast,
-                    extrabed: extrabed,
+                    name: name,
+                    agency: agency,
                     _token: token
                 },
                 success: function (result) {
@@ -116,14 +106,14 @@
                     }
                 },
                 error: function () {
-                    alert('Save Rate failed!');
+                    alert('Save room failed!');
                 }
             });
         }
     }
 
-    function deleteRate(id) {
-        var url = "{{ url('admin/rate') }}/" + id;
+    function deleteRoom(id) {
+        var url = "{{ url('admin/subroom') }}/" + id;
         var confirm = window.confirm('Are you sure to delete ?');
         if (confirm == true) {
             $.ajax({
@@ -135,14 +125,14 @@
                 success: function (result) {
                     if (result.success == true) {
                         alert(result.message);
-                        $('#rate_' + id).remove();
+                        $('#subroom_' + id).remove();
                     } else {
                         alert(result.message);
                     }
                 }
                 ,
                 error: function () {
-                    alert('Delete Rate failed!');
+                    alert('Delete room failed!');
                 }
             })
             ;
