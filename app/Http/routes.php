@@ -19,8 +19,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('rate', 'RateController');
     Route::resource('subroom', 'SubRoomController');
 
-//    Route::delete('gallery/{id}', 'SubCategoryController@galleryDestroy');
-//    Route::post('gallery', 'SubCategoryController@galleryUpload');
+    foreach (['room'] as $r) {
+        Route::delete($r . '/gallery/{id}', ucfirst($r) . 'Controller@galleryDestroy');
+        Route::post($r . '/gallery', ucfirst($r) . 'Controller@galleryUpload');
+    }
 
 });
 
