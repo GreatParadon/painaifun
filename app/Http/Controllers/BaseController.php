@@ -304,7 +304,7 @@ class BaseController extends Controller
             $image = fileUpload($file, $this->page['content']);
             if ($image['success'] == true) {
                 $data['image'] = $image['filename'];
-                $data['room_id'] = $request->input('id');
+                $data[$this->gallery_id_name] = $request->input('id');
                 $this->model_gallery()->create($data);
             } else {
                 return error('Upload Failed');
