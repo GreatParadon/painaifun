@@ -47,9 +47,9 @@
 
                 @foreach ($room_images as $image)
                     <div class="item">
-                        <a href="{{ asset("resources/img/room_img/" . $image->image . "") }}"
+                        <a href="{{ asset("content/room/" . $image->image . "") }}"
                            data-lightbox="painaifun">
-                            <img src="{{ asset("resources/img/room_img/" . $image->image . "") }}">
+                            <img src="{{ asset("content/room/" . $image->image . "") }}">
                         </a>
                     </div>
                 @endforeach

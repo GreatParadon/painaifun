@@ -47,7 +47,9 @@ class RoomController extends BaseController
     {
         $form_data = collect([['field' => 'id', 'type' => 'number', 'label' => 'ID', 'required' => false],
             ['field' => 'title', 'type' => 'text', 'label' => 'Title', 'required' => true],
-            ['field' => 'content', 'type' => 'wysiwyg', 'label' => 'Content', 'required' => true]]);
+            ['field' => 'content', 'type' => 'wysiwyg', 'label' => 'Content', 'required' => true],
+            ['field' => 'active', 'type' => 'checkbox', 'label' => 'Active', 'required' => true]
+        ]);
 
         return $form_data;
     }

@@ -20,8 +20,8 @@ class CreateRatesTable extends Migration
         Schema::create('rates', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('room_id');
-            $table->date('fromdate')->nullable();
-            $table->date('todate')->nullable();
+            $table->date('from_date')->nullable();
+            $table->date('to_date')->nullable();
             $table->integer('first')->nullable();
             $table->integer('second')->nullable();
             $table->integer('holiday')->nullable();

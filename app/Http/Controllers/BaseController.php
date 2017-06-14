@@ -313,6 +313,8 @@ class BaseController extends Controller
         }
         if ($count == $file_count) {
             return success('Uploaded');
+        } else {
+            return success('Uploaded');
         }
     }
 

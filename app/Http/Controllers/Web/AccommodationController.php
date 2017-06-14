@@ -32,9 +32,10 @@ class AccommodationController extends Controller
     public function show($id)
     {
         $rooms = Room::select('id', 'title')->where('active', 1)->orderBy('seq', 'ASC')->get();
-        $room = Room::find($id);
-        $room_images = RoomImage::where('room_id', $id)->get();
-        $rates = $this->rate($id);
+        $room = Room::where('active', 1)->find($id);
+        $rates = ($room) ? $this->rate($id) : [];
+        $room_images = ($room) ? RoomImage::where('room_id', $id)->get() : [];
+
         return view('web.accommodation', compact('rooms', 'room', 'room_images', 'rates'));
     }
 

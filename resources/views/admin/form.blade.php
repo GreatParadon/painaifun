@@ -4,8 +4,8 @@
 @stop
 @section('content')
     <!-- include summernote css/js-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
     <form class="form-horizontal" role="form"
           action="@if(isset($select)){{ url('admin/'.$page['content'].'/'.$select->id) }}@else{{ url('admin/'.$page['content']) }}@endif"
           method="POST" enctype="multipart/form-data">
@@ -34,7 +34,7 @@
                             $(document).on('change', '#{{ $form['field'] or '' }}', function () {
                                 var image = $("#{{ $form['field'] or '' }}");
                                 var ext = image.val().split('.').pop().toLowerCase();
-                                if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+                                if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) === -1) {
                                     alert('File extension are not allowed');
                                     image.val("");
                                     $("#{{ $form['field'] or '' }}_preview").empty();
@@ -70,7 +70,7 @@
                             $(document).on('change', '#{{ $form['field'] or '' }}', function () {
                                 var vdo = $("#{{ $form['field'] or '' }}");
                                 var ext = image.val().split('.').pop().toLowerCase();
-                                if ($.inArray(ext, ['mp4']) == -1) {
+                                if ($.inArray(ext, ['mp4']) === -1) {
                                     alert('File extension are not allowed');
                                     vdo.val("");
                                     $("#{{ $form['field'] or '' }}_preview").empty();
@@ -182,7 +182,7 @@
                                     }
 
                                     function placeMarker(location) {
-                                        if (marker == null) {
+                                        if (marker === null) {
                                             marker = new google.maps.Marker({
                                                 position: location,
                                                 map: map
@@ -249,7 +249,7 @@
                 processData: false,
                 success: function (data) {
                     $("body").css("cursor", "default");
-                    if (data.success == true) {
+                    if (data.success === true) {
                         editor.summernote('insertImage', data.filepath, function ($image) {
                             $image.css('width', '50%');
                             $image.attr('data-filename', data.filepath);
