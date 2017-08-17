@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BaseController;
 use App\Models\About;
 
-class AboutController extends BaseController
+class ReservationController extends BaseController
 {
     protected $page = ['title' => 'About', 'content' => 'about'];
     protected $list_data = [['field' => 'id', 'type' => 'number', 'label' => 'ID'],

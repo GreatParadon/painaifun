@@ -1,3 +1,4 @@
+{{--{{ dd($page['content']) }}--}}
 <table class="table table-hover">
     <thead>
     <tr>
@@ -53,7 +54,7 @@
 
     function deletePopUp(content, id) {
         var confirm = window.confirm('Did you want to Delete this image ?');
-        if (confirm === true) {
+        if (confirm == true) {
             $.ajax({
                 url: '{{ url('admin') }}/' + content + '/gallery/' + id,
                 data: {'_token': '{{ csrf_token() }}'},
@@ -93,7 +94,7 @@
         var image = $("#gallery");
 
         var ext = image.val().split('.').pop().toLowerCase();
-        if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) === -1) {
+        if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
             alert('File extension are not allowed');
             image.val("");
             return false;

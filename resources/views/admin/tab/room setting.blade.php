@@ -30,8 +30,8 @@
 
     function queryRoomData(result) {
         $("#subroom_list").empty();
-        if (result.success == true) {
-            $.each(result.sub_rooms, function (key, value) {
+        if (result.success === true) {
+            $.each(result.subrooms, function (key, value) {
                 var id = (value['id']) ? value['id'] : '';
                 var name = (value['name']) ? value['name'] : '';
                 var agency = (value['agency']) ? value['agency'] : '';
@@ -39,10 +39,6 @@
                 $("#subroom_list").append('<tr id="subroom_' + id + '">'
                     + '<td><input type="text" id="name' + id + '" class="form-control input-sm" value="' + name + '"></td>'
                     + '<td><input type="text" id="agency' + id + '" class="form-control input-sm" value="' + agency + '"></td>'
-//                    + '<td><select id="breakfast' + id + '" class="form-control input-sm" value="' + breakfast + '">'
-//                    + '<option value="1">Yes</option>'
-//                    + '<option value="0">No</option>'
-//                    + '</select></td>'
                     + '<td><a onclick="saveRoom(' + id + ')" style="cursor: pointer"><span class="glyphicon glyphicon-floppy-disk"></span></a> | '
                     + '<a onclick="deleteRoom(' + id + ')" style="cursor: pointer"><span class="glyphicon glyphicon-trash"></span></a></td>'
                     + '</tr>');
@@ -89,7 +85,7 @@
         var agency = $("#agency" + id).val();
         var url = "{{ url('admin/subroom') }}/" + id;
         var confirm = window.confirm('Are you sure to save?');
-        if (confirm == true) {
+        if (confirm === true) {
             $.ajax({
                 url: url,
                 type: 'PUT',
@@ -99,7 +95,7 @@
                     _token: token
                 },
                 success: function (result) {
-                    if (result.success == true) {
+                    if (result.success === true) {
                         alert(result.message);
                     } else {
                         alert(result.message);
@@ -115,7 +111,7 @@
     function deleteRoom(id) {
         var url = "{{ url('admin/subroom') }}/" + id;
         var confirm = window.confirm('Are you sure to delete ?');
-        if (confirm == true) {
+        if (confirm === true) {
             $.ajax({
                 url: url,
                 type: 'DELETE',
@@ -123,7 +119,7 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function (result) {
-                    if (result.success == true) {
+                    if (result.success === true) {
                         alert(result.message);
                         $('#subroom_' + id).remove();
                     } else {

@@ -120,11 +120,16 @@ class BaseController extends Controller
         $page = $this->page;
         $page['type'] = 'Description';
         $page['subtitle'] = 'Create new ' . $this->page['content'];
+        $feature = $this->feature();
+        $create = $feature['create'];
+        $sort = $feature['sort'];
+        $edit = $feature['edit'];
+        $delete = $feature['delete'];
 
         $form_data = $this->formData();
         $form_view = $this->form_view;
 
-        return view('admin.' . $form_view, compact('page', 'form_data'));
+        return view('admin.' . $form_view, compact('page', 'form_data', 'create', 'edit', 'delete', 'sort'));
     }
 
     protected function store(Request $request)
@@ -140,6 +145,21 @@ class BaseController extends Controller
         $image = $this->formData()->where('type', 'image')->pluck('field')->all();
 
         foreach ($image as $r) {
+            $file = $request->file($r);
+
+            if ($file) {
+                $image = fileUpload($file, $this->page['content']);
+                if ($image['success'] == true) {
+                    $data[$r] = $image['filename'];
+                } else {
+                    return back()->with('failed', 'Failed to Store');
+                }
+            }
+        }
+
+        $vdo = $this->formData()->where('type', 'vdo')->pluck('field')->all();
+
+        foreach ($vdo as $r) {
             $file = $request->file($r);
 
             if ($file) {
@@ -175,6 +195,11 @@ class BaseController extends Controller
         $page = $this->page;
         $page['type'] = 'Description';
         $page['subtitle'] = 'Edit ' . $this->page['content'];
+        $feature = $this->feature();
+        $create = $feature['create'];
+        $sort = $feature['sort'];
+        $edit = $feature['edit'];
+        $delete = $feature['delete'];
         $gallery_id_name = $this->gallery_id_name;
 
         $tab = $this->tab();
@@ -185,7 +210,7 @@ class BaseController extends Controller
 
         $select = $this->model()->find($id);
 
-        return view('admin.' . $form_view, compact('page', 'select', 'form_data', 'tab', 'galleries'));
+        return view('admin.' . $form_view, compact('page', 'select', 'form_data', 'tab', 'galleries', 'create', 'edit', 'delete', 'sort'));
     }
 
     protected function update(Request $request)
@@ -207,6 +232,22 @@ class BaseController extends Controller
                 $image = fileUpload($file, $this->page['content']);
                 if ($image['success'] == true) {
                     $data[$r] = $image['filename'];
+                } else {
+                    return back()->with('failed', 'Failed to Store');
+                }
+            }
+        }
+
+        $vdo = $this->formData()->where('type', 'vdo')->pluck('field')->all();
+
+
+        foreach ($vdo as $r) {
+            $file = $request->file($r);
+
+            if ($file) {
+                $vdo = fileUpload($file, $this->page['content']);
+                if ($vdo['success'] == true) {
+                    $data[$r] = $vdo['filename'];
                 } else {
                     return back()->with('failed', 'Failed to Store');
                 }
@@ -312,8 +353,6 @@ class BaseController extends Controller
             $count++;
         }
         if ($count == $file_count) {
-            return success('Uploaded');
-        } else {
             return success('Uploaded');
         }
     }

@@ -2,37 +2,98 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\BaseController;
-use App\Models\About;
+use App\Http\Controllers\Controller;
+use App\Models\SubRoom;
+use Illuminate\Http\Request;
 
-class ReservationController extends BaseController
+use App\Http\Requests;
+
+class SubRoomController extends Controller
 {
-    protected $page = ['title' => 'About', 'content' => 'about'];
-    protected $list_data = [['field' => 'id', 'type' => 'number', 'label' => 'ID'],
-        ['field' => 'title', 'type' => 'text', 'label' => 'Title']];
-
-    protected function feature()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return [
-            'create' => false,
-            'edit' => true,
-            'delete' => false,
-            'sort' => false
-        ];
+        $subrooms = SubRoom::all();
+        return success(compact('subrooms'));
     }
 
-    protected function model()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        return new About();
+        //
     }
 
-    protected function formData()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        $form_data = collect([['field' => 'id', 'type' => 'number', 'label' => 'ID', 'required' => false],
-            ['field' => 'title', 'type' => 'text', 'label' => 'Title', 'required' => true],
-            ['field' => 'content', 'type' => 'wysiwyg', 'label' => 'Content', 'required' => true]]);
-
-        return $form_data;
+        $input = $request->all();
+        $subrooms = SubRoom::create($input);
+        $success = ($subrooms) ? $this->show($input['room_id']) : error('Store failed');
+        return $success;
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $subrooms = SubRoom::where('room_id', $id)->get();
+        return success(compact('subrooms'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $subroom = SubRoom::where('room_id', $id)->get();
+        return success(compact('subroom'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $input = $request->all();
+        $subroom = SubRoom::find($id)->update($input);
+        $success = ($subroom) ? success('Updated') : error('Update failed');
+        return $success;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $subroom = SubRoom::destroy($id);
+        $success = ($subroom) ? success('Deleted') : error('Delete failed');
+        return $success;
+    }
 }
