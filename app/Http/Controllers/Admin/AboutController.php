@@ -13,7 +13,7 @@ class AboutController extends BaseController
     protected function feature()
     {
         return [
-            'create' => false,
+            'create' => true,
             'edit' => true,
             'delete' => false,
             'sort' => false
