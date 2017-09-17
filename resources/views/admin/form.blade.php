@@ -4,8 +4,8 @@
 @stop
 @section('content')
     <!-- include summernote css/js-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.js"></script>
     <form class="form-horizontal" role="form"
           action="@if(isset($select)){{ url('admin/'.$page['content'].'/'.$select->id) }}@else{{ url('admin/'.$page['content']) }}@endif"
           method="POST" enctype="multipart/form-data">
@@ -20,7 +20,7 @@
                         <td>
                             <label for="{{ $form['field'] or '' }}">{{ $form['label'] }}</label>
                             <input type="file" name="{{ $form['field'] or '' }}" id="{{ $form['field'] or '' }}"
-                                   @if(isset($select)) @else @if($form['required'] == true) required @endif @endif>
+                                   @if(isset($select)) @else @if($form['required'] == true) required @endif @if(isset($form['disabled']) && $form['disabled'] == true) disabled @endif @endif>
                         </td>
                         <td id="{{ $form['field'] or '' }}_preview">
                             @if(isset($select))
@@ -34,7 +34,7 @@
                             $(document).on('change', '#{{ $form['field'] or '' }}', function () {
                                 var image = $("#{{ $form['field'] or '' }}");
                                 var ext = image.val().split('.').pop().toLowerCase();
-                                if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+                                if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) === -1) {
                                     alert('File extension are not allowed');
                                     image.val("");
                                     $("#{{ $form['field'] or '' }}_preview").empty();
@@ -56,7 +56,7 @@
                         <td>
                             <label for="{{ $form['field'] or '' }}">{{ $form['label'] }}</label>
                             <input type="file" name="{{ $form['field'] or '' }}" id="{{ $form['field'] or '' }}"
-                                   @if(isset($select)) @else @if($form['required'] == true) required @endif @endif>
+                                   @if(isset($select)) @else @if($form['required'] == true) required @endif @if(isset($form['disabled']) && $form['disabled'] == true) disabled @endif @endif>
                         </td>
                         <td id="{{ $form['field'] or '' }}_preview">
                             @if(isset($select))
@@ -69,8 +69,8 @@
                         <script>
                             $(document).on('change', '#{{ $form['field'] or '' }}', function () {
                                 var vdo = $("#{{ $form['field'] or '' }}");
-                                var ext = image.val().split('.').pop().toLowerCase();
-                                if ($.inArray(ext, ['mp4']) == -1) {
+                                var ext = vdo.val().split('.').pop().toLowerCase();
+                                if ($.inArray(ext, ['mp4']) === -1) {
                                     alert('File extension are not allowed');
                                     vdo.val("");
                                     $("#{{ $form['field'] or '' }}_preview").empty();
@@ -187,7 +187,7 @@
                                                 position: location,
                                                 map: map
                                             });
-                                            document.getElementById("lat").value = ocation.lat();
+                                            document.getElementById("lat").value = location.lat();
                                             document.getElementById("lon").value = location.lng();
                                         } else {
                                             marker.setMap(null);
@@ -214,24 +214,26 @@
                                        id="{{ $form['field'] or '' }}"
                                        value="{{ $select->{$form['field']} or '' }}"
                                        class="form-control input-group-sm"
-                                       @if($form['required'] == true) required @endif>
+                                       @if($form['required'] == true) required @endif @if(isset($form['disabled']) && $form['disabled'] == true) disabled @endif>
                             @else
                                 <input type="{{ $form['type'] or '' }}" name="{{ $form['field'] or '' }}"
                                        id="{{ $form['field'] or '' }}"
                                        value="{{ $select->{$form['field']} or '' }}"
                                        class="form-control input-group-sm" @if($form['required'] == true) required
                                        @endif
-                                       @if( $form['field'] == 'id') readonly @endif>
+                                       @if( $form['field'] == 'id') readonly @endif @if($form['required'] == true) required @endif @if(isset($form['disabled']) && $form['disabled'] == true) disabled @endif>
                             @endif
                         </td>
                     @endif
                 </tr>
             @endforeach
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="Submit" class="btn btn-success pull-right margin-r-5">
-                </td>
-            </tr>
+            @if($create == true)
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="Submit" class="btn btn-success pull-right margin-r-5">
+                    </td>
+                </tr>
+            @endif
         </table>
     </form>
     <script>
@@ -249,7 +251,7 @@
                 processData: false,
                 success: function (data) {
                     $("body").css("cursor", "default");
-                    if (data.success == true) {
+                    if (data.success === true) {
                         editor.summernote('insertImage', data.filepath, function ($image) {
                             $image.css('width', '50%');
                             $image.attr('data-filename', data.filepath);

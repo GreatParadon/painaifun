@@ -108,7 +108,7 @@
         var extrabed = $("#extrabed" + id).val();
         var url = "{{ url('admin/rate') }}/" + id;
         var confirm = window.confirm('Are you sure to save?');
-        if (confirm == true) {
+        if (confirm === true) {
             $.ajax({
                 url: url,
                 type: 'PUT',
@@ -123,7 +123,7 @@
                     _token: token
                 },
                 success: function (result) {
-                    if (result.success == true) {
+                    if (result.success === true) {
                         alert(result.message);
                     } else {
                         alert(result.message);
@@ -139,7 +139,7 @@
     function deleteRate(id) {
         var url = "{{ url('admin/rate') }}/" + id;
         var confirm = window.confirm('Are you sure to delete ?');
-        if (confirm == true) {
+        if (confirm === true) {
             $.ajax({
                 url: url,
                 type: 'DELETE',
@@ -147,7 +147,7 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function (result) {
-                    if (result.success == true) {
+                    if (result.success === true) {
                         alert(result.message);
                         $('#rate_' + id).remove();
                     } else {

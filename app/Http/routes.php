@@ -16,6 +16,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('room/sort', 'RoomController@sort');
     Route::resource('room', 'RoomController');
 
+    Route::get('reservation', function () {
+        return view('admin.reservation.date');
+    });
+
     Route::resource('rate', 'RateController');
     Route::resource('subroom', 'SubRoomController');
 

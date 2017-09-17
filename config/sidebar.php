@@ -2,6 +2,7 @@
 
 return [
     'banner' => [['banner', 'Banner']],
-    'about' => [['about', 'About Us']],
-    'room' => [['room', 'Room']]
+    'about' => [['about/1/edit', 'About Us']],
+    'room' => [['room', 'Room']],
+    'reservation' => [['reservation', 'Reservation']]
 ];

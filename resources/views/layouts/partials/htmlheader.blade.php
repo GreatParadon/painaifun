@@ -1,7 +1,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ env('PROJECT_NAME', 'GREAT') }} @yield('htmlheader_title', 'Your title here')</title>
+    <title>{{ env('PROJECT_NAME', '') }} @yield('htmlheader_title', '')</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -17,9 +17,9 @@
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <link rel="stylesheet" href="{{ asset('/dist/css/skins/skin-blue.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/dist/css/skins/_all-skins.min.css') }}">
 
-    <link href="{{ asset("/plugins/lightbox/css/lightbox.css")}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('/plugins/lightbox/css/lightbox.css')}}" rel="stylesheet" type="text/css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,4 +31,9 @@
     <script src="{{ asset('/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
     <!-- Bootstrap 3.3.6 -->
     <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}"></script>
+    <style>
+        .nav-tabs-custom>.nav-tabs>li.active {
+            border-top-color: #00a65a;
+        }
+    </style>
 </head>

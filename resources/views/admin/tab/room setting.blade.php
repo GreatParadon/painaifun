@@ -7,7 +7,7 @@
             </th>
             <th colspan="1">
                 <button id="add_new_room" onclick="onAddroom()" class="btn btn-success pull-right"><span
-                            class="glyphicon glyphicon-plus"></span></button>
+                        class="glyphicon glyphicon-plus"></span></button>
             </th>
         </tr>
         <tr>
@@ -51,9 +51,9 @@
             url: '{{ url('admin/subroom') }}/' + id,
             type: 'GET',
             success: function (result) {
-                queryRoomData(result);
-            }
-        });
+            queryRoomData(result);
+        }
+    });
 
     }
 

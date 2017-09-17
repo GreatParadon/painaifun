@@ -18,8 +18,8 @@ class CreateReservationTable extends Migration
     public function up()
     {
         Schema::create('reservation', function (Blueprint $table) {
-            $table->increments('reservation_id');
-            $table->date('reservation_date');
+            $table->increments('id');
+            $table->date('date');
             $table->timestamps();
 
         });

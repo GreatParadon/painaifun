@@ -16,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-        @if($select->isEmpty())
+        @if($select->isEmpty() && $create == true)
             <tr>
                 <td colspan="@if($edit == true or $delete == true){{ count($list_data)+1 }}@else{{ count($list_data) }}@endif"
                     align="center"><a href="{{ $page['content'].'/create' }}">Add

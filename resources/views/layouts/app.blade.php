@@ -5,7 +5,7 @@
     @include('layouts.partials.htmlheader')
 @show
 
-<body class="hold-transition @if(Auth::User()) skin-blue sidebar-mini @else login-page @endif ">
+<body class="hold-transition @if(Auth::User()) skin-green sidebar-mini @else login-page @endif ">
 
 @if (Auth::User())
 
