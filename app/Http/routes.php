@@ -11,6 +11,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('banner', 'BannerController');
 
     Route::resource('about', 'AboutController');
+    Route::resource('reservationinfo', 'ReservationInfoController');
 
     Route::get('room/sort', 'RoomController@sortPage');
     Route::post('room/sort', 'RoomController@sort');
@@ -37,6 +38,7 @@ Route::group(['namespace' => 'Web'], function () {
     Route::resource('accommodation', 'AccommodationController');
     Route::get('', 'WebController@index');
     Route::get('about', 'WebController@about');
+    Route::get('reservation', 'WebController@reservation');
 
     Route::get('{web}', function ($web) {
         return view('web.' . $web);
