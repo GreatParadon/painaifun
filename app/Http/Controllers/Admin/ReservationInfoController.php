@@ -27,8 +27,8 @@ class ReservationInfoController extends BaseController
     
     protected function formData()
     {
-        $form_data = collect([['field' => 'id', 'type' => 'number', 'label' => 'ID', 'required' => false],
-        ['field' => 'content', 'type' => 'wysiwyg', 'label' => 'Content', 'required' => true]]);
+        $form_data = collect([['field' => 'id', 'type' => 'number', 'label' => 'ID', 'required' => false, 'disabled' => false],
+        ['field' => 'content', 'type' => 'wysiwyg', 'label' => 'Content', 'required' => true, 'disabled' => false]]);
     
         return $form_data;
     }

@@ -19,14 +19,14 @@ if (!function_exists('filePath')) {
 if (!function_exists('fileUpload')) {
 
     function fileUpload($file = null, $uploadPath = null)
-    {
+    {                                                                
         $name = $file->getClientOriginalName();
         $ext = $file->getClientOriginalExtension();
         $uniqid = uniqid($name);
         $strlen = strlen($name);
         $substr = substr($uniqid, $strlen);
         $filename = $substr . '.' . $ext;
-        if ($file->isValid()) {
+        if ($file->isValid()) {                                                                       
             $upload = \Storage::put($uploadPath . '/' . $filename, file_get_contents($file->getRealPath()),
                 'public');
             if ($upload) {

@@ -3,9 +3,8 @@
     {{ $page['title'] or '' }}
 @stop
 @section('content')
-    <!-- include summernote css/js-->
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
     <form class="form-horizontal" role="form"
           action="@if(isset($select)){{ url('admin/'.$page['content'].'/'.$select->id) }}@else{{ url('admin/'.$page['content']) }}@endif"
           method="POST" enctype="multipart/form-data">
@@ -20,7 +19,7 @@
                         <td>
                             <label for="{{ $form['field'] or '' }}">{{ $form['label'] }}</label>
                             <input type="file" name="{{ $form['field'] or '' }}" id="{{ $form['field'] or '' }}"
-                                   @if(isset($select)) @else @if($form['required'] == true) required @endif @if(isset($form['disabled']) && $form['disabled'] == true) disabled @endif @endif>
+                                   @if(isset($select)) @else @if($form['required'] == true) required @endif @if($form['disabled'] == true) disabled @endif @endif>
                         </td>
                         <td id="{{ $form['field'] or '' }}_preview">
                             @if(isset($select))
@@ -56,7 +55,7 @@
                         <td>
                             <label for="{{ $form['field'] or '' }}">{{ $form['label'] }}</label>
                             <input type="file" name="{{ $form['field'] or '' }}" id="{{ $form['field'] or '' }}"
-                                   @if(isset($select)) @else @if($form['required'] == true) required @endif @if(isset($form['disabled']) && $form['disabled'] == true) disabled @endif @endif>
+                                   @if(isset($select)) @else @if($form['required'] == true) required @endif @if($form['disabled'] == true) disabled @endif @endif>
                         </td>
                         <td id="{{ $form['field'] or '' }}_preview">
                             @if(isset($select))
@@ -214,14 +213,14 @@
                                        id="{{ $form['field'] or '' }}"
                                        value="{{ $select->{$form['field']} or '' }}"
                                        class="form-control input-group-sm"
-                                       @if($form['required'] == true) required @endif @if(isset($form['disabled']) && $form['disabled'] == true) disabled @endif>
+                                       @if($form['required'] == true) required @endif @if($form['disabled'] == true) disabled @endif>
                             @else
                                 <input type="{{ $form['type'] or '' }}" name="{{ $form['field'] or '' }}"
                                        id="{{ $form['field'] or '' }}"
                                        value="{{ $select->{$form['field']} or '' }}"
                                        class="form-control input-group-sm" @if($form['required'] == true) required
                                        @endif
-                                       @if( $form['field'] == 'id') readonly @endif @if($form['required'] == true) required @endif @if(isset($form['disabled']) && $form['disabled'] == true) disabled @endif>
+                                       @if( $form['field'] == 'id') readonly @endif @if($form['required'] == true) required @endif @if($form['disabled'] == true) disabled @endif>
                             @endif
                         </td>
                     @endif

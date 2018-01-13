@@ -2,14 +2,17 @@
 @section('content')
 
     <h2 style="color:#94a316">ROOM AND RATE</h2>
-    <br>
+    <br>    
     <div class="row">
-        <div class="col-md-4" style="border-left-style: solid; border-color: #856541;">
+        <div class="col-md-3" style="border-left-style: solid; border-color: #856541;">
             @foreach ($rooms as $r)
                 <h5 class="accomhover" style="text-transform: uppercase;"
                     onclick='onShowRoomDetail("{{ $r->id }}")'>{{ $r->title }}</h5>
             @endforeach
         </div>
+    </div>
+    <br>
+    <div class="row">
         <div class="col-md-8">
             <div>
                 <h4 style="text-transform: uppercase; color:#856541"><b>{{ $room->title or '' }}</b></h4>

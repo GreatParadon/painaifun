@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 @section('htmlheader')
     @include('layouts.partials.htmlheader')
@@ -39,18 +38,20 @@
                         {{--@if(isset($gallery) and $gallery == true and isset($form_data))--}}
                         {{--<li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Gallery</a></li>--}}
                         {{--@endif--}}
+                        @if(strpos( Route::getCurrentRoute()->getPath(), '/edit' ) === false and strpos( Route::getCurrentRoute()->getPath(), '/create' ) === false)
                         <li class="pull-right">
                             @if(isset($sort) and $sort == true)
-                                <a href="{{ $page['content'].'/sort' }}"
-                                   class="btn btn-box-tool">Sort {{ $page['content'] }}</a>
+                                <a href="{{ '/admin/'.$page['content'].'/sort' }}"
+                                class="btn btn-box-tool">Sort {{ $page['content'] }}</a>
                             @endif
                         </li>
                         <li class="pull-right">
                             @if(isset($create) and $create == true)
-                                <a href="{{ $page['content'].'/create' }}" class="btn btn-box-tool">Create
+                                <a href="{{ '/admin/'.$page['content'].'/create' }}" class="btn btn-box-tool">Create
                                     new {{ $page['content'] }}</a>
                             @endif
                         </li>
+                        @endif                        
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active table-responsive" id="tab_1">

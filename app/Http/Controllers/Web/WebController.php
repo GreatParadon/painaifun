@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\About;
 use App\Models\ReservationInfo;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -26,5 +27,11 @@ class WebController extends Controller
     {
         $reservation = ReservationInfo::first();
         return view('web.reservation', compact('reservation'));
+    }
+
+    public function contact()
+    {
+        $contact = Contact::first();
+        return view('web.contact', compact('contact'));
     }
 }

@@ -1,40 +1,55 @@
 @extends('layouts.app')
 @section('content')
     <style>
-        #app {
-
+        .fc-day {
+            cursor:pointer
         }
-    </style>
 
-    @verbatim
-        <div id="app">
-            <table class="table">
-            <thead>
-                <tr>
-                    <th>1</th>                
-                    <th>2</th>                
-                    <th>3</th>                
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="data in datas">
-                    <th>{{ data }}</th>                
-                    <th>{{ data }}</th>                
-                    <th>{{ data }}</th>                
-                </tr>
-            </tbody>
-            </table>
-        </div>
-    @endverbatim
+        .fc-day-top {
+            cursor:pointer
+        }
 
-    <script src="https://unpkg.com/vue"></script>    
+        .fc-event-container{
+            cursor:pointer            
+        }
+
+        .fc-day:hover{
+            background-color: #B3E5FC
+        }
+
+        .fc-day-top:hover {
+            background: #B3E5FC
+        }
+    </style> 
+
+    <div id='calendar'></div>
+
     <script>
-        var app = new Vue({
-        el: '#app',
-        data: {
-            datas: [1,2,3,4,5]
-        }
-        })
+        let events = [
+                        {
+                            title: 'มีการจอง',
+                            start: '2017-10-14'
+                        }
+                    ]
+                
+        $(document).ready(() => {
+            
+            $('#calendar').fullCalendar({
+                events,
+                dayClick: (date, jsEvent, view) => {
+                    console.log('Clicked on: ' + date.format());
+                    window.location.href = "reservation/room/"+ date.format();
+                },
+                eventClick: (calEvent, jsEvent, view) => {
+                    console.log('Event: ' + calEvent.title);
+                    window.location.href = "reservation/room/"+ date.format();                    
+                }
+            });
+
+            $('.fc-next-button,.fc-prev-button').click(() => {
+                console.log($('.fc-left h2').html())
+            });
+        });    
     </script>
 
 @stop

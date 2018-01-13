@@ -25,14 +25,21 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <script src="{{ asset('plugins/owl-carousel/owl.carousel.js') }}"></script>
-
+    <script src="{{ asset('assets/js/roomscope.js') }}"></script>
 </head>
 <body>
 
 @include('web_component.header')
 
 <div id='container'>
-    @yield('content')
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-3">
+  		    <div class="roomscope-box" data-align="center" data-width="210" data-forcelang="true" data-style="orange" data-type="full"></div>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-9">
+            @yield('content')
+        </div>
+    </div>
 </div>
 
 @include('web_component.footer')

@@ -1,4 +1,3 @@
-{{--{{ dd($page['content']) }}--}}
 <table class="table table-hover">
     <thead>
     <tr>

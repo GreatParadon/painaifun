@@ -343,17 +343,20 @@ class BaseController extends Controller
         $count = 0;
         foreach ($files as $file) {
             $image = fileUpload($file, $this->page['content']);
-            if ($image['success'] == true) {
+            if ($image['success'] == true) {                   
                 $data['image'] = $image['filename'];
                 $data[$this->gallery_id_name] = $request->input('id');
                 $this->model_gallery()->create($data);
-            } else {
+            } else {                  
                 return error('Upload Failed');
             }
             $count++;
         }
-        if ($count == $file_count) {
+
+        if ($count == $file_count) {                                           
             return success('Uploaded');
+        } else { 
+            return error('Upload Failed');            
         }
     }
 

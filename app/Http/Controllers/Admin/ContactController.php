@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
-use App\Models\About;
+use App\Models\Contact;
 
-class AboutController extends BaseController
+class ContactController extends BaseController
 {
-    protected $page = ['title' => 'About', 'content' => 'about'];
-    protected $list_data = [['field' => 'id', 'type' => 'number', 'label' => 'ID']];
+    protected $page = ['title' => 'Contact', 'content' => 'contact'];
 
     protected function feature()
     {
@@ -22,15 +21,16 @@ class AboutController extends BaseController
 
     protected function model()
     {
-        return new About();
+        return new Contact();
     }
 
     protected function formData()
     {
         $form_data = collect([['field' => 'id', 'type' => 'number', 'label' => 'ID', 'required' => false, 'disabled' => false],
-            ['field' => 'content', 'type' => 'wysiwyg', 'label' => 'Content', 'required' => true, 'disabled' => false]]);
+            ['field' => 'map_image', 'type' => 'image', 'label' => 'Map Image', 'required' => true, 'disabled' => false],
+            ['field' => 'map_content', 'type' => 'wysiwyg', 'label' => 'Map Info', 'required' => true, 'disabled' => false]
+            ]);
 
         return $form_data;
     }
-
 }

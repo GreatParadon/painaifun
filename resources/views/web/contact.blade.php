@@ -4,21 +4,13 @@
     <h2 style="color:#94a316">Contact Us</h2>
     <div class="row">
         <div class="col-md-7">
-            <a href='{{ asset('resources/img/map.jpg') }}' data-lightbox='contact'><img
-                        src="{{ asset('resources/img/map.jpg') }}" style='width:100%'></a>
+            <a href="{{ asset("content/contact/" . $contact->map_image . "") }}" data-lightbox='contact'><img
+                        src="{{ asset("content/contact/" . $contact->map_image . "") }}" style='width:100%'></a>
         </div>
         <div class="col-md-1">
         </div>
         <div class="col-md-4">
-            <p style="font-size:18px"><b style="color:#94a316">สำนักงานขาย จ.ลพบุรี</b><br>
-                โทร:<br>
-                +6681-6415493<br>
-                +6687-7935999<br>
-                +6689-1235042 (English)<br>
-                +6688-3373377 (Chinese)<br><br>
-                <b style="color:#94a316">ปายในฝัน รีสอร์ท</b><br>
-                หมู่ 1 ต.แม่ฮี้ อ.ปาย จ.แม่ฮ่องสอน <br>
-                โทร : +6653-064387 (สอบถามเส้นทาง)</p>
+            {!! $contact->map_content !!}
         </div>
     </div>
     <h2 style="color:#94a316">GOOGLE MAP</h2>

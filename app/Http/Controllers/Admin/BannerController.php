@@ -30,10 +30,10 @@ class BannerController extends BaseController
 
     protected function formData()
     {
-        $form_data = collect([['field' => 'id', 'type' => 'number', 'label' => 'ID', 'required' => false],
-            ['field' => 'title', 'type' => 'text', 'label' => 'Title', 'required' => true],
-            ['field' => 'image', 'type' => 'image', 'label' => 'Logo (Suggest 1280*300)', 'required' => false],
-            ['field' => 'active', 'type' => 'checkbox', 'label' => 'Active', 'required' => false]]);
+        $form_data = collect([['field' => 'id', 'type' => 'number', 'label' => 'ID', 'required' => false, 'disabled' => false],
+            ['field' => 'title', 'type' => 'text', 'label' => 'Title', 'required' => true, 'disabled' => false],
+            ['field' => 'image', 'type' => 'image', 'label' => 'Logo (Suggest 1280*300)', 'required' => false, 'disabled' => false],
+            ['field' => 'active', 'type' => 'checkbox', 'label' => 'Active', 'required' => false, 'disabled' => false]]);
 
         return $form_data;
     }
