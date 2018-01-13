@@ -16,7 +16,8 @@ class AboutController extends BaseController
             'create' => true,
             'edit' => true,
             'delete' => false,
-            'sort' => false
+            'sort' => false,
+            'duplicate' => false
         ];
     }
 

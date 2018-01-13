@@ -2,6 +2,8 @@
 
 Route::auth();
 
+Route::get('', 'BaseController@dashboard');
+
 Route::get('admin', 'BaseController@dashboard');
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
@@ -9,11 +11,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('reservation', function () {
         return view('admin.reservation.date');
     });
+
+    Route::get('reservation/{id}/duplicate', 'ReservationController@duplicateData');
     Route::post('reservation', 'ReservationController@store');
     Route::get('reservation/check', 'ReservationController@check');
     Route::put('reservation/{id}', 'ReservationController@update');
     Route::get('reservation/room/{date}', 'ReservationController@index');
     
+    Route::get('banner/{id}/duplicate', 'BannerController@duplicateData');    
     Route::get('banner/sort', 'BannerController@sortPage');
     Route::post('banner/sort', 'BannerController@sort');
     Route::resource('banner', 'BannerController');
@@ -22,6 +27,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('contact', 'ContactController');
     Route::resource('reservationinfo', 'ReservationInfoController');
 
+    Route::get('room/{id}/duplicate', 'RoomController@duplicateData');        
     Route::get('room/sort', 'RoomController@sortPage');
     Route::post('room/sort', 'RoomController@sort');
     Route::resource('room', 'RoomController');

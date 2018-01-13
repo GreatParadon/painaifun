@@ -24,7 +24,8 @@ class BaseController extends Controller
             'create' => false,
             'edit' => false,
             'delete' => false,
-            'sort' => false
+            'sort' => false,
+            'duplicate' => false,
         ];
     }
 
@@ -46,7 +47,7 @@ class BaseController extends Controller
 
     protected function listQuery($list_data)
     {
-        return $this->model()->select($list_data->pluck('field')->all())->get();
+        return $this->model()->select($list_data->pluck('field')->all())->paginate(15);
     }
 
     protected function storeQuery($data)
@@ -86,6 +87,7 @@ class BaseController extends Controller
         $sort = $feature['sort'];
         $edit = $feature['edit'];
         $delete = $feature['delete'];
+        $duplicate = $feature['duplicate'];
         $list_view = $this->list_view;
 
         $select = $this->listQuery($list_data);
@@ -112,7 +114,7 @@ class BaseController extends Controller
             }
         }
 
-        return view('admin.' . $list_view, compact('list_data', 'page', 'select', 'create', 'edit', 'delete', 'sort'));
+        return view('admin.' . $list_view, compact('list_data', 'page', 'select', 'create', 'edit', 'delete', 'sort', 'duplicate'));
     }
 
     protected function create()
@@ -200,7 +202,9 @@ class BaseController extends Controller
         $sort = $feature['sort'];
         $edit = $feature['edit'];
         $delete = $feature['delete'];
+        $duplicate = $feature['duplicate'];
         $gallery_id_name = $this->gallery_id_name;
+        $isEditPage = true;
 
         $tab = $this->tab();
 
@@ -210,7 +214,7 @@ class BaseController extends Controller
 
         $select = $this->model()->find($id);
 
-        return view('admin.' . $form_view, compact('page', 'select', 'form_data', 'tab', 'galleries', 'create', 'edit', 'delete', 'sort'));
+        return view('admin.' . $form_view, compact('page', 'select', 'form_data', 'tab', 'galleries', 'create', 'edit', 'delete', 'sort', 'duplicate', 'isEditPage', 'id'));
     }
 
     protected function update(Request $request)
@@ -343,30 +347,44 @@ class BaseController extends Controller
         $count = 0;
         foreach ($files as $file) {
             $image = fileUpload($file, $this->page['content']);
-            if ($image['success'] == true) {                   
+            if ($image['success'] == true) {
                 $data['image'] = $image['filename'];
                 $data[$this->gallery_id_name] = $request->input('id');
                 $this->model_gallery()->create($data);
-            } else {                  
+            } else {
                 return error('Upload Failed');
             }
             $count++;
         }
-
-        if ($count == $file_count) {                                           
+        if ($count == $file_count) {
             return success('Uploaded');
-        } else { 
-            return error('Upload Failed');            
         }
     }
 
     protected function galleryDestroy($id)
     {
-        $RoomImage = $this->model_gallery()->where('id', $id)->delete();
-        if ($RoomImage) {
+        $destroy = $this->model_gallery()->where('id', $id)->delete();
+        if ($destroy) {
             return success('Deleted');
         } else {
             return error('Delete Failed');
+        }
+    }
+
+    protected function duplicateData($id)
+    {
+        // $input = $request->all();
+        $select = $this->model()->find($id);
+        $replicate = $select->replicate();
+        $replicate->save();
+        if ($replicate) {
+            // if(isset($input['isEdit']) && $input['isEdit'] === true) {
+                return redirect('admin/' . $this->page['content'].'/'. $replicate->id .'/edit')->with('success', 'Duplicated');
+            // } else {
+            //     return redirect('admin/' . $this->page['content'])->with('success', 'Duplicated');
+            // }
+        } else {
+            return error('Failed to Duplicate');
         }
     }
 

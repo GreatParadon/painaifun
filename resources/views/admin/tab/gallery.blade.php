@@ -11,7 +11,7 @@
             </form>
         </td>
         <td>
-            <button onclick="sendFile('{{ url('admin/'.$page['content'].'/gallery') }}')"
+            <button onclick="sendFileGallery('{{ url('admin/'.$page['content'].'/gallery') }}')"
                     class="btn btn-success pull-right">
                 Submit
             </button>
@@ -68,7 +68,7 @@
         }
     }
 
-    function sendFile(url) {
+    function sendFileGallery(url) {
         $("body").css("cursor", "progress");
         var form = $('form')[1]; // You need to use standart javascript object here
         var data = new FormData(form);

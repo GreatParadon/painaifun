@@ -36,6 +36,12 @@
                             @if($edit == true and $delete == true)
                                 |
                             @endif
+                            @if(isset($duplicate) and $duplicate == true)
+                                <a href="{{ $page['content'].'/'.$r->id .'/duplicate' }}" style="cursor: pointer"><span class="glyphicon glyphicon-duplicate"></span></a>
+                            @endif
+                            @if($edit == true and $delete == true and $duplicate == true)
+                                |
+                            @endif
                             @if($delete == true)
                                     <a onclick="deleteData({{ $r->id }})" style="cursor: pointer"><span class="glyphicon glyphicon-trash"></span></a>
                             @endif
@@ -46,6 +52,8 @@
         @endif
         </tbody>
     </table>
+    {{ $select->links() }}
+    
     <script type="application/javascript">
 
         function deleteData(id) {
@@ -65,6 +73,20 @@
                 })
             }
         }
+
+        function duplicateData(id) {
+            var confirm = window.confirm('Are you sure to duplicate?');
+            if (confirm == true) {
+                $.ajax({
+                    url: "{{ url('admin/'.$page['content']) }}/" + id + "/duplicate",
+                    type: "GET",
+                    error: function () {
+                        location.reload();
+                    }
+                })
+            }
+        }
+
 
     </script>
 @stop

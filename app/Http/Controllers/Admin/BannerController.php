@@ -19,7 +19,8 @@ class BannerController extends BaseController
             'create' => true,
             'edit' => true,
             'delete' => true,
-            'sort' => true
+            'sort' => true,
+            'duplicate' => true
         ];
     }
 

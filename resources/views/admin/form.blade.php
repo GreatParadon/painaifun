@@ -3,9 +3,15 @@
     {{ $page['title'] or '' }}
 @stop
 @section('content')
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-    <form class="form-horizontal" role="form"
+    <style>
+        .btn-important {
+            display: block !important;
+            visibility: visible !important;
+        }
+    </style>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+    <form class="form-horizontal table-responsive" role="form"
           action="@if(isset($select)){{ url('admin/'.$page['content'].'/'.$select->id) }}@else{{ url('admin/'.$page['content']) }}@endif"
           method="POST" enctype="multipart/form-data">
         @if(isset($select))
@@ -13,6 +19,16 @@
         @endif
         {{ csrf_field() }}
         <table class="table table-hover no-border">
+            @if($create == true or $edit == true)
+                <tr>
+                    <td>
+                        <h3>แก้ไข {{ $page['title'] or '' }}</h3>
+                    </td>
+                    <td>
+                        <input type="submit" value="Submit" class="btn btn-success pull-right margin-r-5 btn-important">
+                    </td>
+                </tr>
+            @endif
             @foreach($form_data as $form)
                 <tr>
                     @if($form['type'] == 'image')
@@ -92,8 +108,8 @@
                             <label for="{{ $form['field'] or '' }}">{{ $form['label'] }}</label>
                             @if($form['type'] == 'textarea')
                                 <textarea name="{{ $form['field'] or '' }}" id="{{ $form['field'] or '' }}"
-                                          class="form-control input-group-sm"
-                                          @if($form['required'] == true) required @endif>{{ $select->{$form['field']} or '' }}</textarea>
+                                          class="form-control input-group-sm" style="resize: vertical" rows="10"
+                                          @if($form['required'] == true) required @endif >{{ $select->{$form['field']} or '' }}</textarea>
                             @elseif($form['type'] == 'checkbox')
                                 <div class="checkbox">
                                     <label>
@@ -111,9 +127,7 @@
                                         height: 500,
                                         callbacks: {
                                             onImageUpload: function (files) {
-                                                var url = $(this).data('{{ $form['field'] or '' }}'); //path is defined as data attribute for  textarea
-                                                console.log(url);
-                                                sendFile(files[0], url, $(this));
+                                                sendFileWysiwyg(files[0], $(this));                                  
                                             }
                                         },
                                         fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
@@ -226,17 +240,17 @@
                     @endif
                 </tr>
             @endforeach
-            @if($create == true)
+            @if($create == true or $edit == true)
                 <tr>
                     <td colspan="2">
-                        <input type="submit" value="Submit" class="btn btn-success pull-right margin-r-5">
+                        <input type="submit" value="Submit" class="btn btn-success pull-right margin-r-5 btn-important">
                     </td>
                 </tr>
             @endif
         </table>
     </form>
     <script>
-        function sendFile(file, url, editor) {
+        function sendFileWysiwyg(file, editor) {
             $("body").css("cursor", "progress");
             data = new FormData();
             data.append("file", file);
@@ -244,7 +258,7 @@
             $.ajax({
                 data: data,
                 type: "POST",
-                url: "{{url('wysiwyg_upload')}}",
+                url: "{{ url('wysiwyg_upload') }}",
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -252,7 +266,7 @@
                     $("body").css("cursor", "default");
                     if (data.success === true) {
                         editor.summernote('insertImage', data.filepath, function ($image) {
-                            $image.css('width', '50%');
+                            $image.css('width', '100%');
                             $image.attr('data-filename', data.filepath);
                         });
                     } else {
